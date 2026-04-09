@@ -7,10 +7,10 @@ export default function QuizPage(){
         <div>
             <Card>
                 <h1>What is the first move in the London System?</h1>
-                <Button variant="Primary" onClick={() => alert("Correct!")}>d4</Button>
-                <Button variant="Primary" onClick={() => alert("Incorrect!")}>e4</Button>
-                <Button variant="Primary" onClick={() => alert("Incorrect!")}>h4</Button>
-                <Button variant="Primary" onClick={() => alert("Incorrect!!")}>c3</Button>
+                <Button variant="primary" onClick={() => alert("Correct!")}>d4</Button>
+                <Button variant="primary" onClick={() => alert("Incorrect!")}>e4</Button>
+                <Button variant="primary" onClick={() => alert("Incorrect!")}>h4</Button>
+                <Button variant="primary" onClick={() => alert("Incorrect!!")}>c3</Button>
             
             </Card> 
         <p>More questions coming soon!</p>

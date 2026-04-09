@@ -23,9 +23,10 @@ export default function ChessBoard(){
         }
 
         return(
-            <Chessboard
-            position={game.fen()}
-            onPieceDrop={pieceMove}
-            />
+            <Card>
+                <div style={{width:"400px", height:"400px"}}>
+                <Chessboard position={game.fen()} onPieceDrop={pieceMove}/>
+                </div>
+            </Card>
         )
 }
