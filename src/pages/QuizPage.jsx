@@ -12,6 +12,7 @@ export default function QuizPage(){
                 <Button variant="warning" onClick={() => alert("Incorrect!")}>h4</Button>
                 <Button variant="danger" onClick={() => alert("Incorrect!!")}>c3</Button>
             
+            
             </Card> 
         <p>More questions coming soon!</p>
         </div>
