@@ -19,24 +19,26 @@ export default function ChessBoard({
   const [game, setGame] = useState(createGame)
   const [moveList, setMoveList] = useState([])
 
-  function pieceMove(previousLoc, newLoc) {
+  function pieceMove({ sourceSquare, targetSquare }) {
+    if (!targetSquare) return false
+
     const updatedGame = new Chess(game.fen())
 
     const legalMoves = updatedGame.moves({
-      square: previousLoc,
+      square: sourceSquare,
       verbose: true
     })
 
-    const isLegal = legalMoves.some(move => move.to === newLoc)
+    const isLegal = legalMoves.some(move => move.to === targetSquare)
 
     if (!isLegal) {
-      console.log('Illegal move from', previousLoc, 'to', newLoc)
+      console.log('Illegal move from', sourceSquare, 'to', targetSquare)
       return false
     }
 
     updatedGame.move({
-      from: previousLoc,
-      to: newLoc,
+      from: sourceSquare,
+      to: targetSquare,
       promotion: 'q'
     })
 
@@ -77,8 +79,10 @@ export default function ChessBoard({
 
         <div style={{ width: 'min(420px, 100%)', margin: '0 auto' }}>
           <Chessboard
-            position={game.fen()}
-            onPieceDrop={pieceMove}
+            options={{
+              position: game.fen(),
+              onPieceDrop: pieceMove
+            }}
           />
         </div>
 
