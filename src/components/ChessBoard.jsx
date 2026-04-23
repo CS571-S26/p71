@@ -22,19 +22,19 @@ export default function ChessBoard({
   function pieceMove(previousLoc, newLoc) {
     const updatedGame = new Chess(game.fen())
 
-    const move = updatedGame.move({
-      from: previousLoc,
-      to: newLoc,
-      promotion: 'q'
-    })
+    try {
+      updatedGame.move({
+        from: previousLoc,
+        to: newLoc,
+        promotion: 'q'
+      })
 
-    if (move === null) {
+      setGame(updatedGame)
+      setMoveList(updatedGame.history())
+      return true
+    } catch {
       return false
     }
-
-    setGame(updatedGame)
-    setMoveList(updatedGame.history())
-    return true
   }
 
   function resetBoard() {
@@ -54,7 +54,7 @@ export default function ChessBoard({
     ? 'Checkmate'
     : game.isDraw()
     ? 'Draw'
-    : game.inCheck()
+    : game.isCheck()
     ? `${game.turn() === 'w' ? 'White' : 'Black'} is in check`
     : `${game.turn() === 'w' ? 'White' : 'Black'} to move`
 
