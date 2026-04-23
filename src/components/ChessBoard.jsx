@@ -42,17 +42,14 @@ export default function ChessBoard({
 
     const styles = {
       [square]: {
-        background:
-          'radial-gradient(circle, rgba(255,215,0,0.55) 36%, transparent 40%)',
-        borderRadius: '50%'
+        backgroundColor: 'rgba(255, 215, 0, 0.45)'
       }
     }
 
     for (const move of moves) {
       styles[move.to] = {
         background:
-          'radial-gradient(circle, rgba(0,128,255,0.35) 28%, transparent 30%)',
-        borderRadius: '50%'
+          'radial-gradient(circle, rgba(0, 128, 255, 0.45) 25%, transparent 27%)'
       }
     }
 
@@ -98,9 +95,8 @@ export default function ChessBoard({
     return applyMove(sourceSquare, targetSquare)
   }
 
-  function handleSquareClick(square) {
+  function handleSquareClick({ square, piece }) {
     const tempGame = new Chess(currentFen)
-    const piece = tempGame.get(square)
 
     if (selectedSquare) {
       if (selectedSquare === square) {
@@ -163,9 +159,13 @@ export default function ChessBoard({
           <Chessboard
             options={{
               position: currentFen,
-              onPieceDrop: pieceMove,
-              onSquareClick: handleSquareClick,
-              customSquareStyles: highlightedSquares
+              onPieceDrop: ({ sourceSquare, targetSquare }) =>
+                pieceMove({ sourceSquare, targetSquare }),
+              onSquareClick: ({ square, piece }) =>
+                handleSquareClick({ square, piece }),
+              squareStyles: highlightedSquares,
+              arePiecesDraggable: true,
+              animationDuration: 200
             }}
           />
         </div>
