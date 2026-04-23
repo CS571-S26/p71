@@ -8,57 +8,139 @@ export default function ChessBoard({
   description = 'Play moves on the board.',
   initialFen = undefined
 }) {
-  const createGame = () => {
+  function createInitialFen() {
     const chess = new Chess()
     if (initialFen) {
       chess.load(initialFen)
     }
-    return chess
+    return chess.fen()
   }
 
-  const [game, setGame] = useState(createGame)
-  const [moveList, setMoveList] = useState([])
+  const [history, setHistory] = useState(() => [
+    { fen: createInitialFen(), move: null }
+  ])
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [selectedSquare, setSelectedSquare] = useState(null)
+  const [highlightedSquares, setHighlightedSquares] = useState({})
 
-  function pieceMove({ sourceSquare, targetSquare }) {
-    if (!targetSquare) return false
+  const currentFen = history[currentIndex].fen
+  const game = new Chess(currentFen)
 
-    const updatedGame = new Chess(game.fen())
+  function clearSelection() {
+    setSelectedSquare(null)
+    setHighlightedSquares({})
+  }
 
-    const legalMoves = updatedGame.moves({
-      square: sourceSquare,
+  function getHighlightStyles(square) {
+    const tempGame = new Chess(currentFen)
+    const moves = tempGame.moves({
+      square,
       verbose: true
     })
 
-    const isLegal = legalMoves.some(move => move.to === targetSquare)
+    if (moves.length === 0) return {}
 
-    if (!isLegal) {
-      console.log('Illegal move from', sourceSquare, 'to', targetSquare)
+    const styles = {
+      [square]: {
+        background:
+          'radial-gradient(circle, rgba(255,215,0,0.55) 36%, transparent 40%)',
+        borderRadius: '50%'
+      }
+    }
+
+    for (const move of moves) {
+      styles[move.to] = {
+        background:
+          'radial-gradient(circle, rgba(0,128,255,0.35) 28%, transparent 30%)',
+        borderRadius: '50%'
+      }
+    }
+
+    return styles
+  }
+
+  function applyMove(from, to) {
+    const tempGame = new Chess(currentFen)
+
+    const legalMoves = tempGame.moves({
+      square: from,
+      verbose: true
+    })
+
+    const chosenMove = legalMoves.find(move => move.to === to)
+
+    if (!chosenMove) {
       return false
     }
 
-    updatedGame.move({
-      from: sourceSquare,
-      to: targetSquare,
+    const moveResult = tempGame.move({
+      from,
+      to,
       promotion: 'q'
     })
 
-    setGame(updatedGame)
-    setMoveList(updatedGame.history())
+    const nextEntry = {
+      fen: tempGame.fen(),
+      move: moveResult.san
+    }
+
+    const branchedHistory = history.slice(0, currentIndex + 1)
+    branchedHistory.push(nextEntry)
+
+    setHistory(branchedHistory)
+    setCurrentIndex(branchedHistory.length - 1)
+    clearSelection()
     return true
   }
 
+  function pieceMove({ sourceSquare, targetSquare }) {
+    if (!targetSquare) return false
+    return applyMove(sourceSquare, targetSquare)
+  }
+
+  function handleSquareClick(square) {
+    const tempGame = new Chess(currentFen)
+    const piece = tempGame.get(square)
+
+    if (selectedSquare) {
+      if (selectedSquare === square) {
+        clearSelection()
+        return
+      }
+
+      const moved = applyMove(selectedSquare, square)
+      if (moved) return
+    }
+
+    if (piece && piece.color === tempGame.turn()) {
+      setSelectedSquare(square)
+      setHighlightedSquares(getHighlightStyles(square))
+    } else {
+      clearSelection()
+    }
+  }
+
   function resetBoard() {
-    const resetGame = createGame()
-    setGame(resetGame)
-    setMoveList([])
+    setHistory([{ fen: createInitialFen(), move: null }])
+    setCurrentIndex(0)
+    clearSelection()
   }
 
   function undoMove() {
-    const updatedGame = new Chess(game.fen())
-    updatedGame.undo()
-    setGame(updatedGame)
-    setMoveList(updatedGame.history())
+    if (currentIndex === 0) return
+    setCurrentIndex(currentIndex - 1)
+    clearSelection()
   }
+
+  function redoMove() {
+    if (currentIndex >= history.length - 1) return
+    setCurrentIndex(currentIndex + 1)
+    clearSelection()
+  }
+
+  const moveList = history
+    .slice(1, currentIndex + 1)
+    .map(entry => entry.move)
 
   const statusText = game.isCheckmate()
     ? 'Checkmate'
@@ -80,8 +162,10 @@ export default function ChessBoard({
         <div style={{ width: 'min(420px, 100%)', margin: '0 auto' }}>
           <Chessboard
             options={{
-              position: game.fen(),
-              onPieceDrop: pieceMove
+              position: currentFen,
+              onPieceDrop: pieceMove,
+              onSquareClick: handleSquareClick,
+              customSquareStyles: highlightedSquares
             }}
           />
         </div>
@@ -97,9 +181,16 @@ export default function ChessBoard({
           <Button
             variant="outline-dark"
             onClick={undoMove}
-            disabled={moveList.length === 0}
+            disabled={currentIndex === 0}
           >
-            Undo
+            ← Undo
+          </Button>
+          <Button
+            variant="outline-dark"
+            onClick={redoMove}
+            disabled={currentIndex >= history.length - 1}
+          >
+            Redo →
           </Button>
         </Stack>
 
