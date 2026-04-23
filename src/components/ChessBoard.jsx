@@ -22,19 +22,27 @@ export default function ChessBoard({
   function pieceMove(previousLoc, newLoc) {
     const updatedGame = new Chess(game.fen())
 
-    try {
-      updatedGame.move({
-        from: previousLoc,
-        to: newLoc,
-        promotion: 'q'
-      })
+    const legalMoves = updatedGame.moves({
+      square: previousLoc,
+      verbose: true
+    })
 
-      setGame(updatedGame)
-      setMoveList(updatedGame.history())
-      return true
-    } catch {
+    const isLegal = legalMoves.some(move => move.to === newLoc)
+
+    if (!isLegal) {
+      console.log('Illegal move from', previousLoc, 'to', newLoc)
       return false
     }
+
+    updatedGame.move({
+      from: previousLoc,
+      to: newLoc,
+      promotion: 'q'
+    })
+
+    setGame(updatedGame)
+    setMoveList(updatedGame.history())
+    return true
   }
 
   function resetBoard() {
@@ -82,7 +90,11 @@ export default function ChessBoard({
           <Button variant="secondary" onClick={resetBoard}>
             Reset
           </Button>
-          <Button variant="outline-dark" onClick={undoMove} disabled={moveList.length === 0}>
+          <Button
+            variant="outline-dark"
+            onClick={undoMove}
+            disabled={moveList.length === 0}
+          >
             Undo
           </Button>
         </Stack>
