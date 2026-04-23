@@ -42,18 +42,29 @@ export default function ChessBoard({
 
     const styles = {
       [square]: {
-        backgroundColor: 'rgba(255, 215, 0, 0.45)'
+        boxShadow: 'inset 0 0 0 5px rgba(255, 215, 0, 0.95)',
       }
     }
 
     for (const move of moves) {
       styles[move.to] = {
-        background:
-          'radial-gradient(circle, rgba(0, 128, 255, 0.45) 25%, transparent 27%)'
+        boxShadow: 'inset 0 0 0 5px rgba(0, 140, 255, 0.85)',
       }
     }
 
     return styles
+  }
+
+  function selectSquare(square) {
+    const tempGame = new Chess(currentFen)
+    const piece = tempGame.get(square)
+
+    if (piece && piece.color === tempGame.turn()) {
+      setSelectedSquare(square)
+      setHighlightedSquares(getHighlightStyles(square))
+    } else {
+      clearSelection()
+    }
   }
 
   function applyMove(from, to) {
@@ -95,8 +106,13 @@ export default function ChessBoard({
     return applyMove(sourceSquare, targetSquare)
   }
 
-  function handleSquareClick({ square, piece }) {
-    const tempGame = new Chess(currentFen)
+  function handlePieceClick({ square }) {
+    if (!square) return
+    selectSquare(square)
+  }
+
+  function handleSquareClick({ square }) {
+    if (!square) return
 
     if (selectedSquare) {
       if (selectedSquare === square) {
@@ -108,12 +124,7 @@ export default function ChessBoard({
       if (moved) return
     }
 
-    if (piece && piece.color === tempGame.turn()) {
-      setSelectedSquare(square)
-      setHighlightedSquares(getHighlightStyles(square))
-    } else {
-      clearSelection()
-    }
+    selectSquare(square)
   }
 
   function resetBoard() {
@@ -161,11 +172,13 @@ export default function ChessBoard({
               position: currentFen,
               onPieceDrop: ({ sourceSquare, targetSquare }) =>
                 pieceMove({ sourceSquare, targetSquare }),
-              onSquareClick: ({ square, piece }) =>
-                handleSquareClick({ square, piece }),
+              onPieceClick: ({ square }) =>
+                handlePieceClick({ square }),
+              onSquareClick: ({ square }) =>
+                handleSquareClick({ square }),
               squareStyles: highlightedSquares,
-              arePiecesDraggable: true,
-              animationDuration: 200
+              allowDragging: true,
+              animationDurationInMs: 200
             }}
           />
         </div>
