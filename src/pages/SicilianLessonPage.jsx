@@ -1,24 +1,55 @@
-import ChessBoard from "../components/ChessBoard";
+import ChessBoard from '../components/ChessBoard'
+import LessonCard from '../components/LessonCard'
+import OpeningMoves from '../components/OpeningMoves'
+import Header from '../components/Header'
+import Tips from '../components/tips'
 
+export default function SicilianLessonPage() {
+  const sicilianFen = 'rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2'
 
-export default function SicilianLessonPage(){
-    return(
-        <div>
-            <ChessBoard/>
-            <h1>This page is for learning the Sicilian defense! </h1>
-            <br></br>
-            <p>The Sicilian defense is a type a defensive opening while playing with the black pieces.</p>
-            <p>The defense starts in response to the opponent moving their pawn from positon e2 to e4</p>
-            <p>The crucial responding move played with the sicilian defense is the c7 pawn to c5</p>
-            <p>This starting position has multiple continuing variations called lines.</p>
-            <br></br>
-            <p>For example, one variation is the open variation.</p>
-            <p>This occurs when the opponent brings their knight from g1 to f3</p>
-            <p>The resulting move is you playing pwn from d7 to d6. The most common follow up is the opponent moving their pawn from d2 to d4</p>
-            <p>You should take the pawn on d4 with your pawn thta is on c5, and the opponent will most likely capture your resulting pawn with their knight</p>
-            <p>This is a strong defense with the black pieces.</p>
-            <p>The opponent has space occupied in the center of the board which is considered the ideal for openings, however this allows you to occupy space with the light square bishop located on c8</p>
-            
-        </div>
-    )
+  return (
+    <div>
+      <Header
+        title="Sicilian Defense"
+        badge="Black Opening"
+        subtitle="The Sicilian Defense begins with 1. e4 c5 and creates an aggressive, unbalanced game."
+      />
+
+      <LessonCard title="Main idea">
+        <p>
+          Instead of matching White with 1...e5, Black plays 1...c5 to fight for
+          the center from the side. This often leads to sharp games where Black
+          gets counterplay on the queenside.
+        </p>
+      </LessonCard>
+
+      <LessonCard title="Typical goals">
+        <ul>
+          <li>Pressure the d4 square.</li>
+          <li>Create queenside counterplay.</li>
+          <li>Avoid symmetrical positions.</li>
+          <li>Develop quickly and castle safely.</li>
+        </ul>
+      </LessonCard>
+
+      <OpeningMoves
+        moves={[
+          'White plays 1. e4 to control the center.',
+          'Black responds 1...c5, starting the Sicilian Defense.',
+          'White often continues with Nf3 and d4.',
+          'Black usually develops knights and prepares active counterplay.'
+        ]}
+      />
+
+      <Tips>
+        In the Sicilian, Black often allows White to build the center first, then attacks it later.
+      </Tips>
+
+      <ChessBoard
+        title="Sicilian Practice Board"
+        description="This board starts after 1. e4 c5. Try exploring White’s next moves."
+        initialFen={sicilianFen}
+      />
+    </div>
+  )
 }
