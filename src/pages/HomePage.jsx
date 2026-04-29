@@ -1,8 +1,11 @@
 import { useState } from 'react'
 import '../App.css'
-import { Button, Card } from 'react-bootstrap'
+import { Button, Card, Col, Row, Stack } from 'react-bootstrap'
 
 import {useNavigate} from 'react-router-dom'
+import LessonCard from '../components/LessonCard'
+import Header from '../components/Header'
+
 export default function HomePage() {
   const navigate = useNavigate();
   const [count, setCount] = useState(0)
@@ -11,21 +14,43 @@ export default function HomePage() {
     const lessons = ['/sicilian', '/london'];
     navigate(lessons[Math.floor(Math.random()*lessons.length)]);
   }
-
+  
   
   return (
-    <div className="w-400 h-400 d-flex justify-content-center align-items-center">
-      <Card className='m-4 p-2'>
-        <Card.Body className='text-center'>
-          <h1>Chess Tutor</h1>
-          <p>Learn how to play chess openings! If you are a beginner or intermediate player, learning openings will help in improving rating!</p>
+    <div>
+      <Card className="shadow-lg border-0 rounded-4 p-4 mb-5 bg-light">
+        <Card.Body className="text-center">
+          <Header
+            badge="Interactive Chess Learning"
+            title="Chess Tutor"
+            subtitle="Learn beginner-friendly chess openings through lessons, practice boards, and quick quizzes."
+          />
 
+          <Stack direction="horizontal" gap={3} className="justify-content-center flex-wrap">
+            <Button variant="dark" onClick={() => navigate('/sicilian')}>
+              Start Sicilian
+            </Button>
+            <Button variant="secondary" onClick={() => navigate('/london')}>
+              Start London
+            </Button>
+            <Button variant="outline-dark" onClick={goToRandomLesson}>
+              Random Lesson
+            </Button>
+          </Stack>
         </Card.Body>
-        <Button variant="dark" onClick={() => navigate('/sicilian')}>Go to the Sicilian Lesson!</Button>
-        <Button variant="secondary" onClick={() => navigate('/london')}>Go to the London Lesson!</Button>
-
-        <Button variant="outline-dark" onClick={goToRandomLesson}>Go to a Random Lesson!</Button>
       </Card>
+
+      <Row className="g-4">
+        <Col md={4}>
+          <LessonCard title="Opening Lessons" text="Learn the Sicilian Defense and London System"/>
+        </Col>
+        <Col md={4}>
+          <LessonCard title="Interactive Chessboard" text="Practice games to test different chess lines"/>
+        </Col>
+        <Col md={4}>
+          <LessonCard title="Quizzes" text="Test your knowledge of openings with simple questions!"/>
+        </Col>
+      </Row>
     </div>
   )
 }
