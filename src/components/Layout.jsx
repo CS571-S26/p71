@@ -5,7 +5,7 @@ import '../App.css'
 export default function Layout() {
   return (
     <div>
-        <Navbar bg="dark" className="app-navbar">
+        <Navbar variant="dark" className="app-navbar">
           <Container>
             <Navbar.Brand as={Link} to="/">Chess Tutor</Navbar.Brand>
             <Nav className="me-auto">

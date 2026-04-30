@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import '../App.css'
 import { Button, Card, Col, Row, Stack } from 'react-bootstrap'
 
@@ -26,7 +25,7 @@ export default function HomePage() {
           />
 
           <Stack direction="horizontal" gap={3} className="justify-content-center flex-wrap">
-            <Button variant="btn-chess" onClick={() => navigate('/sicilian')}>
+            <Button className="btn-chess" onClick={() => navigate('/sicilian')}>
               Start Sicilian
             </Button>
             <Button variant="secondary" onClick={() => navigate('/london')}>
