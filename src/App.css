@@ -4,7 +4,17 @@ body {
 }
 
 .app-navbar {
-  background: linear-gradient(90deg, #302621, #5a381e) !important;
+  background: linear-gradient(90deg, #302621, #5a381e);
+}
+
+.app-navbar .navbar-brand,
+.app-navbar .nav-link {
+  color: #ffffff !important;
+}
+
+.app-navbar .nav-link:hover,
+.app-navbar .navbar-brand:hover {
+  color: #f8d98b !important;
 }
 
 .chess-card {
