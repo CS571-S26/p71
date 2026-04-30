@@ -1,59 +1,35 @@
-// import ChessBoard from "../components/ChessBoard";
-import {Card, Button, Alert} from 'react-bootstrap';
+import Header from '../components/Header'
+import QuizCard from '../components/QuizCard'
 
-export default function QuizPage(){
-    
-    return(
-        <div>
-            <div>
-            <Card>
-                <h1>What is the first move in the London System?</h1>
-                <Button variant="primary" onClick={() => alert("Correct!")}>d4</Button>
-                <Button variant="success" onClick={() => alert("Incorrect!")}>e4</Button>
-                <Button variant="warning" onClick={() => alert("Incorrect!")}>h4</Button>
-                <Button variant="danger" onClick={() => alert("Incorrect!")}>c3</Button>
-            
-            
-            </Card> 
-            </div>
+export default function QuizPage() {
+  return (
+    <div>
+      <Header
+        title="Opening Quiz"
+        badge="Knowledge Check"
+        subtitle="Test what you know about the Sicilian Defense and London System."
+      />
 
+      <QuizCard
+        question="What is the first move in the London System?"
+        answers={['d4', 'e4', 'h4', 'c3']}
+        correctAnswer="d4"
+        explanation="The London System usually starts with 1. d4."
+      />
 
-            <div>
-            <Card>
-                <h1>What move can the sicilian defense be played against</h1>
-                <Button variant="primary" onClick={() => alert("Incorrect!")}>d4</Button>
-                <Button variant="success" onClick={() => alert("Correct!")}>e4</Button>
-                <Button variant="warning" onClick={() => alert("Incorrect!")}>h4</Button>
-                <Button variant="danger" onClick={() => alert("Incorrect!")}>c3</Button>
-            
-            
-            </Card> 
-            </div>
-            <div>
-            <Card>
-                <h1>What is the first move the sicilian defense?</h1>
-                <Button variant="primary" onClick={() => alert("Incorrect!")}>e5</Button>
-                <Button variant="success" onClick={() => alert("Incorrect!")}>d6</Button>
-                <Button variant="warning" onClick={() => alert("Incorrect!")}>a5</Button>
-                <Button variant="danger" onClick={() => alert("Correct!")}>c5</Button>
-            
-            
-            </Card> 
-            </div>
+      <QuizCard
+        question="What is Black’s first move in the Sicilian Defense?"
+        answers={['c5', 'e5', 'd5', 'Nf6']}
+        correctAnswer="c5"
+        explanation="The Sicilian Defense begins with 1. e4 c5."
+      />
 
-            <div>
-            <Card>
-                <h1>What isn't a variation of the sicilian defense?</h1>
-                <Button variant="primary" onClick={() => alert("Incorrect!")}>open variation</Button>
-                <Button variant="success" onClick={() => alert("Incorrect!")}>closed variation</Button>
-                <Button variant="warning" onClick={() => alert("Incorrect!")}>Smith-Morra Gambit</Button>
-                <Button variant="danger" onClick={() => alert("Correct!")}>Krause variation</Button>
-            
-            
-            </Card> 
-        </div>
-
-        <p>More questions coming soon!</p>
-        </div>
-    )
+      <QuizCard
+        question="What is one major goal of opening play?"
+        answers={['Develop pieces', 'Move the queen repeatedly', 'Ignore the center', 'Avoid castling']}
+        correctAnswer="Develop pieces"
+        explanation="Good openings usually focus on development, king safety, and central control."
+      />
+    </div>
+  )
 }
