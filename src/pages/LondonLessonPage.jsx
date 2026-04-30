@@ -17,9 +17,7 @@ export default function LondonLessonPage() {
 
       <LessonCard title="Main idea">
         <p>
-          The London System is popular because White can use a similar setup
-          against many Black defenses. It focuses on fast development, king
-          safety, and a strong central structure.
+          The London System is a popular opening for the White pieces. It creates a balanced center with limited counterplay for Black.
         </p>
       </LessonCard>
 
@@ -27,17 +25,20 @@ export default function LondonLessonPage() {
         <ul>
           <li>Play d4 and develop the dark-square bishop to f4.</li>
           <li>Support the center with e3 and c3.</li>
-          <li>Develop knights naturally to f3 and d2.</li>
-          <li>Castle early and avoid unnecessary queen moves.</li>
+          <li>Develop pieces early to take up open space</li>
+          <li>Castle early so the king is safe.</li>
         </ul>
       </LessonCard>
 
       <OpeningMoves
         moves={[
-          'White starts with 1. d4.',
-          'White often develops the bishop with Bf4.',
-          'White supports the center with e3 and c3.',
-          'White usually castles kingside after developing pieces.'
+          'White starts with pawn to d4.',
+          'The most common move played by Black is d5',
+          'White should immediately move bishop to f4',
+          'Afterwords, if the bishop isnt pressured the move pawn to e4 should be played',
+          'if the bishop remains unpressured, move knight to f3',
+          'Black pieces will most likely develop both of their knights and bishop',
+          'The goal will be moving the bishop to d3, and castling, creating a solid foundation covering the center'
         ]}
       />
 
