@@ -158,7 +158,7 @@ export default function ChessBoard({
     : `${game.turn() === 'w' ? 'White' : 'Black'} to move`
 
   return (
-    <Card className="shadow-sm border-0 rounded-4 p-3">
+    <Card className="shadow-sm border-0 rounded-4 p-3 chess-card">
       <Card.Body>
         <div className="text-center mb-3">
           <h3 className="mb-2">{title}</h3>

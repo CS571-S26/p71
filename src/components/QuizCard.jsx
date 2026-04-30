@@ -8,7 +8,7 @@ export default function QuizCard({ question, answers, correctAnswer, explanation
   const correct = selected === correctAnswer
 
   return (
-    <Card className="shadow-sm border-0 rounded-4 mb-4">
+    <Card className="shadow-sm border-0 rounded-4 mb-4 chess-card">
       <Card.Body>
         <h2 className="h4">{question}</h2>
 

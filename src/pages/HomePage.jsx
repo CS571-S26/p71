@@ -8,7 +8,6 @@ import Header from '../components/Header'
 
 export default function HomePage() {
   const navigate = useNavigate();
-  const [count, setCount] = useState(0)
 
   function goToRandomLesson(){
     const lessons = ['/sicilian', '/london'];
@@ -18,7 +17,7 @@ export default function HomePage() {
   
   return (
     <div>
-      <Card className="shadow-lg border-0 rounded-4 p-4 mb-5 bg-light">
+      <Card className="shadow-lg border-0 rounded-4 p-4 mb-5 chess-card">
         <Card.Body className="text-center">
           <Header
             badge="Interactive Chess Learning"
@@ -27,7 +26,7 @@ export default function HomePage() {
           />
 
           <Stack direction="horizontal" gap={3} className="justify-content-center flex-wrap">
-            <Button variant="dark" onClick={() => navigate('/sicilian')}>
+            <Button variant="btn-chess" onClick={() => navigate('/sicilian')}>
               Start Sicilian
             </Button>
             <Button variant="secondary" onClick={() => navigate('/london')}>
