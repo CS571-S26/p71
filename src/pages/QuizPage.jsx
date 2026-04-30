@@ -41,8 +41,8 @@ export default function QuizPage() {
         <QuizCard
         question="What makes the london opening a good opening for players to use?"
         answers={['it prevents Black from having early counterplay', 'It gives up the center', 'It allows for early attacks on your king', 'it is an uncommon opening catching others off guard']}
-        correctAnswer="Balanced"
-        explanation="The Sicilian defense creates an unbalanced position, that attacks the center."
+        correctAnswer="it prevents Black from having early counterplay"
+        explanation="The London opening allows for early castling of the king, making it safe early on."
       />
     </div>
   )
